@@ -1,23 +1,5 @@
 var socket = io.connect("http://24.16.255.56:8888");
 
-// GameBoard code below
-function Background(game) {
-    this.name = "background";
-    Entity.call(this, game, 0, 0);
-}
-
-Background.prototype = new Entity();
-Background.prototype.constructor = Background;
-
-Background.prototype.update = function () {
-}
-
-Background.prototype.draw = function (ctx) {
-    var forest = new Image();
-    forest.src = "./img/forest.png";
-    ctx.drawImage(forest, -(forest.width / 2), -(forest.height / 2),1200,1200);
-    Entity.prototype.draw.call(this);
-}
 
 function distance(a, b) {
     var dx = a.x - b.x;
@@ -224,12 +206,10 @@ ASSET_MANAGER.downloadAll(function () {
     var ctx = canvas.getContext('2d');
     
     //var gameEngine = new GameEngine();
-    var bg = new Background(gameEngine);
     var circle = new Circle(gameEngine);
     
     circle.setIt();
     gameEngine.addEntity(circle);
-    gameEngine.addEntity(bg);
     for (var i = 0; i < 20; i++) {
         circle = new Circle(gameEngine);
         gameEngine.addEntity(circle);
@@ -255,8 +235,6 @@ ASSET_MANAGER.downloadAll(function () {
                 stateToSave.gameState.push({name: ent.name, x: ent.x, y: ent.y, it: ent.it, 
                     radius: ent.radius, visualRadius: ent.visualRadius, 
                     color: ent.color, speed: ent.speed,velocity:{x:ent.velocity.x, y:ent.velocity.y}});
-            }else{
-                stateToSave.gameState.push({x: ent.x, y: ent.y});
             }
         }
 
@@ -288,13 +266,7 @@ ASSET_MANAGER.downloadAll(function () {
                 circle.velocity.x = ent.velocity.x;
                 circle.velocity.y = ent.velocity.y;
                 gameEngine.entities.push(circle);
-            } else{
-                var background = new Background(gameEngine);
-                // background.x = ent.x;
-                // background.y = ent.y;
-                // background.forest.src = ent.forest;
-                gameEngine.entities.push(background);
-            }
+            } 
             
         }
     });
